@@ -92,18 +92,7 @@ class _SingInState extends State<SingIn> {
                       onTap: () {
                         signIn();
                       },
-                      child: Container(
-                        padding: EdgeInsets.symmetric(vertical: 18),
-                        decoration: BoxDecoration(
-                            color: Colors.blue,
-                            borderRadius: BorderRadius.circular(30)),
-                        alignment: Alignment.center,
-                        width: MediaQuery.of(context).size.width - 48,
-                        child: Text(
-                          "Sign in",
-                          style: TextStyle(color: Colors.white, fontSize: 16),
-                        ),
-                      ),
+                      child: blueButton(context, "Sign in"),
                     ),
                     SizedBox(
                       height: 24,

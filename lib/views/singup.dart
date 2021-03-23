@@ -94,16 +94,7 @@ class _SingUpState extends State<SingUp> {
                 onTap: () {
                   singUp();
                 },
-                child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 18),
-                  decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(30)
-                  ),
-                  alignment: Alignment.center,
-                  width: MediaQuery.of(context).size.width - 48,
-                  child: Text("Sign Up", style: TextStyle(color: Colors.white,fontSize: 16),),
-                ),
+                child: blueButton(context, "Sign Up"),
               ),
               SizedBox(height: 24,),
 
