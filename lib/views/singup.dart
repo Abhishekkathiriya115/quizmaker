@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quizmaker/helper/function.dart';
 import 'package:quizmaker/services/auth.dart';
 import 'package:quizmaker/views/home.dart';
 import 'package:quizmaker/views/signin.dart';
@@ -26,6 +27,7 @@ class _SingUpState extends State<SingUp> {
       await _authService.signUpWithEmailAndPassword(email,
           password).then((result){
         if(result != null){
+          HelperFunction.saveUserLoggedInDetail(isUserLoggedIn: true);
           Navigator.pushReplacement(context, MaterialPageRoute(
               builder: (context) => Home()
           ));
@@ -94,7 +96,9 @@ class _SingUpState extends State<SingUp> {
                 onTap: () {
                   singUp();
                 },
-                child: blueButton(context, "Sign Up"),
+                child: blueButton(
+                    context: context,
+                    label: "Sign Up"),
               ),
               SizedBox(height: 24,),
 

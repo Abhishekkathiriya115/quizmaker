@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:quizmaker/services/database.dart';
+import 'package:quizmaker/views/addquestion.dart';
 import 'package:quizmaker/widgets/widgets.dart';
+import 'package:random_string/random_string.dart';
 
 class CreateQuiz extends StatefulWidget {
   @override
@@ -9,7 +12,40 @@ class CreateQuiz extends StatefulWidget {
 class _CreateQuizState extends State<CreateQuiz> {
 
   final _formKey = GlobalKey<FormState>();
-  String quizImageUrl, quizTitle, quizDescription;
+  String quizImageUrl, quizTitle, quizDescription,quizId;
+
+  DatabaseServices databaseServices = new DatabaseServices();
+
+  bool isLoading = false;
+
+
+  createQuiz() async {
+
+    quizId = randomAlphaNumeric(16);
+    if(_formKey.currentState.validate()){
+
+      setState(() {
+        isLoading = true;
+      });
+
+      Map<String, String> quizData = {
+        "auizId" : quizId,
+        "quizImgUrl" : quizImageUrl,
+        "quizTitle" : quizTitle,
+        "quizDesc" : quizDescription
+      };
+
+     await databaseServices.addQuizData(quizData, quizId).then((value){
+        setState(() {
+          isLoading = false;
+        });
+        Navigator.pushReplacement(context, MaterialPageRoute(
+            builder: (context) =>  AddQuestion(quizId)
+        ));
+      });
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +96,15 @@ class _CreateQuizState extends State<CreateQuiz> {
                 },
               ),
               Spacer(),
-              blueButton(context, 'Create Quiz'),
+              GestureDetector(
+                  onTap: () {
+                    createQuiz();
+                  },
+                  child: blueButton(
+                     context: context,
+                      label: 'Create Quiz'
+                  )
+              ),
               SizedBox(height: 60,),
             ],
           ),
